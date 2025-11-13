@@ -1,1 +1,45 @@
-@import "tailwindcss";
+
+/* ✅ Import Google Font (Montserrat Alternates) */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;500;600;700&display=swap');
+
+/* ✅ Import Tailwind */
+@import 'tailwindcss';
+
+/* 🎨 Define theme values using Tailwind v4's CSS-first @theme */
+@theme {
+  --color-dusk: oklch(52% 0.1 245);
+  --font-display: 'Montserrat Alternates', sans-serif;
+  --breakpoint-3xl: 1920px;
+  --ease-fluid: cubic-bezier(0.3, 0, 0, 1);
+}
+
+/* 🌍 Base styles — applies global typography and layout */
+@layer base {
+  html {
+    font-family: var(--font-display);
+    font-weight: 500;
+    line-height: 25.6px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--color-dusk);
+    color: white;
+    margin: 0;
+  }
+}
+
+/* 🧱 Component layer — reusable UI styles */
+@layer components {
+  .card {
+    @apply m-10 p-6 rounded-lg shadow-lg bg-white text-gray-800;
+  }
+}
+
+/* ⚙️ Utility layer — optional custom helpers */
+@layer utilities {
+  .ease-fluid {
+    transition-timing-function: var(--ease-fluid);
+  }
+}
