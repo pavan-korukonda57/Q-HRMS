@@ -1,3 +1,5 @@
+
+
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -6,7 +8,7 @@ export default function Banner1() {
   const location = useLocation();
 
   const [showPagesDropdown, setShowPagesDropdown] = useState(false);
-  const [activePill, setActivePill] = useState(null); 
+  const [activePill, setActivePill] = useState(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showFullLabel, setShowFullLabel] = useState(false);
 
@@ -131,20 +133,49 @@ export default function Banner1() {
     };
   }, []);
 
+  // Prevent horizontal "blue" overscroll / extra slide space by forcing no horizontal overflow on the document
+  useEffect(() => {
+    const prevHtmlOverflowX = document.documentElement.style.overflowX;
+    const prevBodyOverflowX = document.body.style.overflowX;
+    const prevHtmlBg = document.documentElement.style.backgroundColor;
+    const prevBodyBg = document.body.style.backgroundColor;
+    const prevHtmlOverscroll = document.documentElement.style.overscrollBehavior;
+    const prevBodyOverscroll = document.body.style.overscrollBehavior;
+
+    // hide horizontal overflow and set background to dark to avoid bounce color exposure
+    document.documentElement.style.overflowX = "hidden";
+    document.body.style.overflowX = "hidden";
+    document.documentElement.style.backgroundColor = "#000";
+    document.body.style.backgroundColor = "#000";
+
+    // prevent overscroll from showing underlying color on some browsers
+    document.documentElement.style.overscrollBehavior = "none";
+    document.body.style.overscrollBehavior = "none";
+
+    return () => {
+      document.documentElement.style.overflowX = prevHtmlOverflowX || "";
+      document.body.style.overflowX = prevBodyOverflowX || "";
+      document.documentElement.style.backgroundColor = prevHtmlBg || "";
+      document.body.style.backgroundColor = prevBodyBg || "";
+      document.documentElement.style.overscrollBehavior = prevHtmlOverscroll || "";
+      document.body.style.overscrollBehavior = prevBodyOverscroll || "";
+    };
+  }, []);
+
   // Styling constants
   const activeGradient = "linear-gradient(180deg,#2D9CFE 0%, #1E90FF 100%)";
   const CTA_BORDER_COLOR = "#1268fb";
 
   const pillBaseClass =
     "rounded-2xl px-6 py-2 font-semibold text-sm focus:outline-none transition-all flex items-center gap-2 relative z-20 select-none";
-  
+
   const pillDefaultStyle = {
     background: "transparent",
     color: "rgba(255,255,255,0.92)",
     border: "none",
     boxShadow: "none",
   };
-  
+
   // Active top-menu pill style (white text)
   const pillActiveStyle = {
     background: activeGradient,
@@ -287,7 +318,15 @@ export default function Banner1() {
   };
 
   return (
-    <section id="home" className="relative w-full h-[560px] md:h-[760px] overflow-visible">
+    <section
+      id="home"
+      className="relative w-full h-[560px] md:h-[760px] overflow-hidden"
+      style={{
+        backgroundColor: "#000", // ensure dark background so any overscroll shows dark instead of blue
+        WebkitOverflowScrolling: "touch",
+        overscrollBehavior: "none",
+      }}
+    >
       {/* Background Video */}
       <video
         className="absolute inset-0 w-full h-full object-cover"
@@ -298,6 +337,12 @@ export default function Banner1() {
         src="/assets/video1.mp4"
         poster="/assets/banner-poster.png"
         aria-hidden
+        style={{
+          // ensure video never creates horizontal overflow
+          maxWidth: "100%",
+          maxHeight: "100%",
+          display: "block",
+        }}
       />
 
       {/* Gradient overlay */}
@@ -407,9 +452,7 @@ export default function Banner1() {
                 color: "white",
               }}
             >
-              <span className="uppercase font-semibold tracking-wide text-sm">
-                GET STARTED
-              </span>
+              <span className="uppercase font-semibold tracking-wide text-sm">GET STARTED</span>
               <span
                 className="flex items-center justify-center rounded-md"
                 style={{
@@ -419,13 +462,7 @@ export default function Banner1() {
                   color: "#00243a",
                 }}
               >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  viewBox="0 0 24 24"
-                >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M7 7h10v10" />
                 </svg>
               </span>

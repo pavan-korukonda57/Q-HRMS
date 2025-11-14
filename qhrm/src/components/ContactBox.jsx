@@ -1,6 +1,8 @@
+
+
 import React, { useState } from "react";
 
-export default function ContactStackSection() {
+export default function ContactBox() {
   const [form, setForm] = useState({ name: "", phone: "", service: "" });
   const [errors, setErrors] = useState({});
 
@@ -31,12 +33,15 @@ export default function ContactStackSection() {
   return (
     <section className="min-h-[60vh] bg-white py-8">
       <div className="max-w-3xl mx-auto px-6">
-        <div className="rounded-2xl overflow-hidden shadow-lg border border-slate-100">
+
+        {/* Component Background (sky-200) */}
+        <div className="rounded-2xl overflow-hidden shadow-lg border border-slate-100 bg-sky-200">
           <div className="p-8 md:p-10">
+
             {/* Contact Info */}
             <div className="mb-10">
               <h2
-                className="text-3xl font-bold text-slate-700 tracking-tight"
+                className="text-3xl font-bold text-slate-800 tracking-tight"
                 style={{ fontFamily: "'Quicksand', sans-serif" }}
               >
                 We're Nearby
@@ -137,51 +142,55 @@ export default function ContactStackSection() {
             {/* Say Hello Form */}
             <div>
               <h3
-                className="text-3xl font-bold text-slate-700 mb-6"
+                className="text-3xl font-bold text-slate-800 mb-6"
                 style={{ fontFamily: "'Quicksand', sans-serif" }}
               >
                 Say, Hello !
               </h3>
 
               <form onSubmit={handleSubmit} className="space-y-5">
+
+                {/* INPUT 1 */}
                 <div>
-                  <label className="block text-sm text-slate-500 mb-2">
+                  <label className="block text-sm text-slate-700 font-medium mb-2">
                     Your Name*
                   </label>
                   <input
                     name="name"
                     value={form.name}
                     onChange={handleChange}
-                    className={`w-full bg-transparent border-b border-slate-300 py-3 px-2 placeholder-slate-300 focus:outline-none focus:border-[#1268fb] transition ${
-                      errors.name ? "ring-1 ring-red-200" : ""
+                    className={`w-full bg-transparent border-b border-slate-400 py-3 px-2 placeholder-slate-400 text-slate-800 font-medium focus:outline-none focus:border-[#1268fb] transition ${
+                      errors.name ? "ring-1 ring-red-300" : ""
                     }`}
                     placeholder="Your Name"
                   />
                   {errors.name && (
-                    <p className="text-sm text-red-500 mt-1">{errors.name}</p>
+                    <p className="text-sm text-red-600 mt-1 font-medium">{errors.name}</p>
                   )}
                 </div>
 
+                {/* INPUT 2 */}
                 <div>
-                  <label className="block text-sm text-slate-500 mb-2">
+                  <label className="block text-sm text-slate-700 font-medium mb-2">
                     Mobile Number*
                   </label>
                   <input
                     name="phone"
                     value={form.phone}
                     onChange={handleChange}
-                    className={`w-full bg-transparent border-b border-slate-300 py-3 px-2 placeholder-slate-300 focus:outline-none focus:border-[#1268fb] transition ${
-                      errors.phone ? "ring-1 ring-red-200" : ""
+                    className={`w-full bg-transparent border-b border-slate-400 py-3 px-2 placeholder-slate-400 text-slate-800 font-medium focus:outline-none focus:border-[#1268fb] transition ${
+                      errors.phone ? "ring-1 ring-red-300" : ""
                     }`}
                     placeholder="+91 99999 99999"
                   />
                   {errors.phone && (
-                    <p className="text-sm text-red-500 mt-1">{errors.phone}</p>
+                    <p className="text-sm text-red-600 mt-1 font-medium">{errors.phone}</p>
                   )}
                 </div>
 
+                {/* SELECT */}
                 <div>
-                  <label className="block text-sm text-slate-500 mb-2">
+                  <label className="block text-sm text-slate-700 font-medium mb-2">
                     Choose types of service*
                   </label>
                   <div className="relative">
@@ -189,8 +198,8 @@ export default function ContactStackSection() {
                       name="service"
                       value={form.service}
                       onChange={handleChange}
-                      className={`appearance-none w-full py-3 pl-2 pr-10 border-b border-slate-300 bg-transparent focus:outline-none focus:border-[#1268fb] ${
-                        errors.service ? "ring-1 ring-red-200" : ""
+                      className={`appearance-none w-full py-3 pl-2 pr-10 border-b border-slate-400 bg-transparent text-slate-800 font-medium focus:outline-none focus:border-[#1268fb] ${
+                        errors.service ? "ring-1 ring-red-300" : ""
                       }`}
                     >
                       <option value="">-- Select service --</option>
@@ -198,18 +207,18 @@ export default function ContactStackSection() {
                       <option>Maintenance</option>
                       <option>Custom Work</option>
                     </select>
-                    <span className="absolute right-2 top-3 text-slate-400 pointer-events-none">
+                    <span className="absolute right-2 top-3 text-slate-500 pointer-events-none">
                       ▾
                     </span>
                   </div>
                   {errors.service && (
-                    <p className="text-sm text-red-500 mt-1">
+                    <p className="text-sm text-red-600 mt-1 font-medium">
                       {errors.service}
                     </p>
                   )}
                 </div>
 
-                {/* Centered GET STARTED Button */}
+                {/* BUTTON */}
                 <div className="flex justify-center pt-6">
                   <button
                     type="submit"
@@ -250,14 +259,16 @@ export default function ContactStackSection() {
                 </div>
               </form>
             </div>
+
           </div>
         </div>
+
       </div>
     </section>
   );
 }
 
-// ContactRow — sky-blue boxes with white icons
+// ContactRow
 function ContactRow({ icon, title, lines }) {
   return (
     <div className="flex items-start gap-4">
@@ -265,17 +276,17 @@ function ContactRow({ icon, title, lines }) {
         className="w-16 h-16 flex items-center justify-center rounded-xl shadow-md"
         style={{ background: "#1268FB" }}
       >
-        <div>{icon}</div>
+        {icon}
       </div>
 
       <div className="flex-1">
         <div
-          className="text-lg font-semibold text-slate-700"
+          className="text-lg font-semibold text-slate-800"
           style={{ fontFamily: "'Quicksand', sans-serif" }}
         >
           {title}
         </div>
-        <div className="text-sm text-slate-500 mt-1 space-y-0.5">
+        <div className="text-sm text-slate-700 font-medium mt-1 space-y-0.5">
           {lines.map((l, i) => (
             <div key={i}>{l}</div>
           ))}
@@ -284,3 +295,4 @@ function ContactRow({ icon, title, lines }) {
     </div>
   );
 }
+

@@ -39,7 +39,7 @@ export default function ContactSection() {
 
       <form onSubmit={handleSubmit} className="w-full space-y-6">
         {/* Name + Email */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm text-gray-500 mb-2">Your Name*</label>
             <input
@@ -49,9 +49,7 @@ export default function ContactSection() {
               className="w-full border-b border-gray-300 focus:border-blue-400 outline-none py-3 bg-transparent"
               required
             />
-          </div>  
-   
-
+          </div>
 
           <div>
             <label className="block text-sm text-gray-500 mb-2">Email Address*</label>
@@ -96,29 +94,27 @@ export default function ContactSection() {
             </select>
           </div>
         </div>
-               {/* Additional Message (slightly tighter spacing) */}
-<div>
-  <label className="block text-sm text-gray-500 mb-0 leading-none">Additional Message</label>
-  <textarea
-    name="message"
-    value={form.message}
-    onChange={handleChange}
-    rows={5}
-    className="w-full border-b border-gray-300 focus:border-blue-400 outline-none pt-0.5 pb-2 bg-transparent resize-none"
-  />
-</div>
 
+        {/* Additional Message */}
+        <div>
+          <label className="block text-sm text-gray-500 mb-0 leading-none">Additional Message</label>
+          <textarea
+            name="message"
+            value={form.message}
+            onChange={handleChange}
+            rows={5}
+            className="w-full border-b border-gray-300 focus:border-blue-400 outline-none pt-0.5 pb-2 bg-transparent resize-none"
+          />
+        </div>
 
+        {/* Upload + SEND MESSAGE button (same line) */}
+        <div className="flex items-center justify-between w-full max-w-full mt-2 gap-4">
 
-
-
-
-        {/* Smaller Upload Section (no 'Upload Resume' label) */}
-        <div className="mt-4">
-          <div className="flex items-center gap-4 w-full max-w-2xl p-3 border border-gray-200 rounded-lg bg-gray-50 shadow-sm hover:bg-gray-100 transition-all duration-150">
+          {/* Upload Box */}
+          <div className="flex items-center gap-2 w-full max-w-sm p-2 border border-gray-200 rounded-md bg-gray-50 shadow-sm">
             <label
               htmlFor="file"
-              className="flex items-center justify-center w-28 px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-md cursor-pointer hover:bg-blue-700 transition-all"
+              className="flex items-center justify-center w-20 px-3 py-1.5 bg-blue-600 text-white text-xs font-medium rounded cursor-pointer"
             >
               Upload
             </label>
@@ -132,27 +128,51 @@ export default function ContactSection() {
               className="hidden"
             />
 
-            <div className="flex-1 px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-600 text-sm truncate">
+            <div className="flex-1 px-2 py-1 bg-white border border-gray-300 rounded text-gray-600 text-xs truncate">
               {form.file ? form.file.name : "No file selected."}
             </div>
           </div>
 
-          <p className="mt-2 text-xs text-gray-400">
-            *Upload your resume in pdf, jpg, png, or doc format.
-          </p>
-        </div>
-
-        {/* Send Message Button */}
-        <div className="flex justify-end mt-6">
+          {/* SEND MESSAGE Button - SAME SHAPE AS "GET STARTED" */}
           <button
             type="submit"
-            className="px-8 py-3 rounded-full bg-blue-600 text-white font-semibold shadow-md hover:bg-blue-700 transition-all"
+            className="flex items-center justify-between gap-3 px-6 py-3 rounded-2xl border transition-all duration-300 shadow-md"
+            style={{
+              background: "#010E37",
+              borderColor: "#2D9CFE",
+              color: "white",
+            }}
           >
-            Send Message
+            <span className="uppercase font-semibold tracking-wide text-sm">
+              SEND MESSAGE
+            </span>
+
+            <span
+              className="flex items-center justify-center rounded-md"
+              style={{
+                width: 34,
+                height: 34,
+                background: "#2D9CFE",
+                color: "#00243a",
+              }}
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M7 7h10v10" />
+              </svg>
+            </span>
           </button>
         </div>
+
+        <p className="mt-1 text-[10px] text-gray-400">
+          *Upload your resume in pdf, jpg, png, or doc format.
+        </p>
       </form>
     </section>
   );
 }
-

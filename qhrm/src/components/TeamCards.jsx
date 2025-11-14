@@ -3,12 +3,12 @@ import { FaFacebookF, FaLinkedinIn, FaPinterestP } from "react-icons/fa";
 
 export default function TeamCards() {
   const teamMembers = [
-    { id: 1, name: "Mira Sofia", role: "Talent Management", img: "/assets/image6.png" },
-    { id: 2, name: "Luca Jansen", role: "Employee Experience", img: "/assets/photo3.png" },
-    { id: 3, name: "Omar Zayd", role: "Succession Planning", img: "/assets/photo6.png" },
+    { id: 1, name: "Mira Sofia", role: "Talent Management", img: "/assets/image5.png" },
+    { id: 2, name: "Luca Jansen", role: "Employee Experience", img: "/assets/photo5.png" },
+    { id: 3, name: "Omar Zayd", role: "Succession Planning", img: "/assets/image6.png" },
     { id: 4, name: "Clara Isabelle", role: "Labor Relations", img: "/assets/photo4.png" },
-    { id: 5, name: "Sophia Lee", role: "Project Manager", img: "/assets/image5.png" },
-    { id: 6, name: "Ravi Patel", role: "Software Engineer", img: "/assets/photo5.png" },
+    { id: 5, name: "Sophia Lee", role: "Project Manager", img: "/assets/photo6.png" },
+    { id: 6, name: "Ravi Patel", role: "Software Engineer", img: "/assets/photo3.png" },
   ];
 
   return (

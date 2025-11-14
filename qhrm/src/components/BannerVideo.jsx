@@ -1,3 +1,5 @@
+
+
 import React, { useState } from "react";
 
 export default function BannerVideo() {
@@ -17,7 +19,7 @@ export default function BannerVideo() {
 
   return (
     <section className="w-full bg-white py-16">
-      {/* Top Heading with Sky Blue Border */}
+      {/* Top Heading */}
       <div className="flex justify-center mb-6">
         <h3
           className="text-lg md:text-xl font-semibold text-gray-800 px-6 py-2 rounded-full border"
@@ -27,7 +29,6 @@ export default function BannerVideo() {
         </h3>
       </div>
 
-      {/* Main Heading */}
       <h2 className="text-gray-800 text-2xl md:text-3xl font-semibold text-center mb-8">
         Building Better Teams, One Hire At A Time
       </h2>
@@ -43,7 +44,6 @@ export default function BannerVideo() {
           className="w-full h-[640px] object-cover"
         />
 
-        {/* Overlay gradient */}
         <div className="absolute inset-0 bg-gradient-to-tr from-black/50 via-transparent to-black/40 group-hover:from-black/60 transition-all duration-500"></div>
 
         {/* Play button */}
@@ -69,7 +69,7 @@ export default function BannerVideo() {
         </button>
       </div>
 
-      {/* Bottom Text & Avatars */}
+      {/* Bottom Text */}
       <div className="mt-10 flex flex-col md:flex-row items-center justify-between gap-6 max-w-7xl mx-auto px-4">
         <div className="flex-1 text-center md:text-left">
           <p className="text-gray-600 text-sm md:text-base max-w-2xl mx-auto md:mx-0">
@@ -120,37 +120,33 @@ export default function BannerVideo() {
       {/* Video Modal */}
       {open && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
           role="dialog"
           aria-modal="true"
+          onClick={() => setOpen(false)}
         >
-          <div className="relative w-full max-w-5xl mx-auto rounded-[2rem] overflow-hidden">
+          <div
+            className="relative w-full max-w-5xl mx-auto rounded-2xl overflow-hidden bg-black"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
             <button
               onClick={() => setOpen(false)}
-              aria-label="Close video"
-              className="absolute -top-8 right-0 text-white bg-black/60 rounded-full w-10 h-10 flex items-center justify-center hover:scale-105"
+              aria-label="Close"
+              className="absolute top-4 right-4 text-white bg-black/50 backdrop-blur-sm rounded-full w-10 h-10 flex items-center justify-center hover:bg-black/70 transition"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-5 h-5"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
+              ✕
             </button>
 
-            <div className="aspect-w-16 aspect-h-9 rounded-[2rem] overflow-hidden">
+            {/* FIXED: Full-size responsive video */}
+            <div className="aspect-video w-full">
               <iframe
                 src={videoEmbedUrl}
-                title="Video player"
+                title="Video Player"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
-                className="w-full h-full rounded-[2rem] shadow-xl border-0"
-              />
+                className="w-full h-full rounded-2xl"
+              ></iframe>
             </div>
           </div>
         </div>

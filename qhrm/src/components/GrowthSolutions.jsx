@@ -1,7 +1,8 @@
 
+
 import React, { useEffect, useRef, useState } from "react";
 
-export default function GrowthCarousel() {
+export default function GrowthSolutions() {
   const images = [
     "https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=1600&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1600&auto=format&fit=crop",
@@ -72,10 +73,10 @@ export default function GrowthCarousel() {
       if (!pausedRef.current) {
         setTimeout(() => setIndex((p) => (p + 1) % n), 50);
       }
-      intervalRef.current = setTimeout(nextStep, 1800); // 🔹 Speed = 1.8s
+      intervalRef.current = setTimeout(nextStep, 3500); // 🔹 Speed = 1.8s
     }
 
-    intervalRef.current = setTimeout(nextStep, 1800);
+    intervalRef.current = setTimeout(nextStep, 3500);
   }
 
   function stopAuto() {
@@ -395,5 +396,5 @@ export default function GrowthCarousel() {
       )}
     </section>
   );
-}
+}  
 

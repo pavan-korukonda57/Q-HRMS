@@ -1,7 +1,7 @@
 
 import React from "react";
 
-export default function HRServicesSectionReplica() {
+export default function HRServicesSection() {
   const CTA_BORDER = "#0e56d6"; // slightly darker for border contrast
 
   const services = [

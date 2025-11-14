@@ -1,3 +1,5 @@
+
+
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -132,6 +134,45 @@ export default function Banner3() {
     };
   }, []);
 
+  // Prevent horizontal overscroll / "blue" edge (mobile bounce) by locking horizontal overflow and overscroll behavior
+  useEffect(() => {
+    // save previous inline styles to restore later
+    const prevHtmlOverflowX = document.documentElement.style.overflowX;
+    const prevBodyOverflowX = document.body.style.overflowX;
+    const prevHtmlBg = document.documentElement.style.backgroundColor;
+    const prevBodyBg = document.body.style.backgroundColor;
+    const prevHtmlOverscroll = document.documentElement.style.overscrollBehavior;
+    const prevBodyOverscroll = document.body.style.overscrollBehavior;
+    const prevHtmlTouchAction = document.documentElement.style.touchAction;
+    const prevBodyTouchAction = document.body.style.touchAction;
+
+    document.documentElement.style.overflowX = "hidden";
+    document.body.style.overflowX = "hidden";
+
+    // set dark background so the rubber-band shows dark instead of browser default (blue/white)
+    document.documentElement.style.backgroundColor = "#000";
+    document.body.style.backgroundColor = "#000";
+
+    // prevent overscroll/bounce revealing underlying UI horizontally
+    document.documentElement.style.overscrollBehavior = "none";
+    document.body.style.overscrollBehavior = "none";
+
+    // allow vertical panning only (helpful on some touch browsers)
+    document.documentElement.style.touchAction = "pan-y";
+    document.body.style.touchAction = "pan-y";
+
+    return () => {
+      document.documentElement.style.overflowX = prevHtmlOverflowX || "";
+      document.body.style.overflowX = prevBodyOverflowX || "";
+      document.documentElement.style.backgroundColor = prevHtmlBg || "";
+      document.body.style.backgroundColor = prevBodyBg || "";
+      document.documentElement.style.overscrollBehavior = prevHtmlOverscroll || "";
+      document.body.style.overscrollBehavior = prevBodyOverscroll || "";
+      document.documentElement.style.touchAction = prevHtmlTouchAction || "";
+      document.body.style.touchAction = prevBodyTouchAction || "";
+    };
+  }, []);
+
   // Styling constants
   const activeGradient = "linear-gradient(180deg,#2D9CFE 0%, #1E90FF 100%)";
   const CTA_BORDER_COLOR = "#1268fb";
@@ -150,7 +191,6 @@ export default function Banner3() {
     border: `1px solid ${CTA_BORDER_COLOR}`,
   };
 
-  // submenu fixed-size styles (keep same size when toggling)
   const submenuSelectedStyle = {
     background: activeGradient,
     color: "#ffffff",
@@ -173,7 +213,6 @@ export default function Banner3() {
     transition: "all 0.12s ease-in-out",
   };
 
-  // Logo interactions for showing full label on hover/touch
   const onLogoMouseEnter = () => {
     if (touchHideTimer.current) clearTimeout(touchHideTimer.current);
     setShowFullLabel(true);
@@ -223,7 +262,6 @@ export default function Banner3() {
             </span>
           </button>
 
-          {/* Pages dropdown — submenu items text by default, boxed on hover/click */}
           <div
             className={`absolute left-1/2 transform -translate-x-1/2 top-full mt-3 rounded-2xl shadow-xl z-50 overflow-hidden transition-all duration-180 ${
               showPagesDropdown ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
@@ -249,7 +287,6 @@ export default function Banner3() {
                       setActivePill(page.name);
                     }}
                     onMouseLeave={() => {
-                      // small timeout to avoid flicker
                       navLeaveTimer.current = setTimeout(() => {
                         setActivePill(null);
                       }, 120);
@@ -285,9 +322,28 @@ export default function Banner3() {
   };
 
   return (
-    <section id="home" className="relative w-full h-[480px] md:h-[620px] overflow-visible">
-      {/* Background Image */}
-      <img src="/assets/banner9.png" alt="Banner background" className="absolute inset-0 w-full h-full object-cover" />
+    <section
+      id="home"
+      className="relative w-full h-[480px] md:h-[620px] overflow-hidden"
+      style={{
+        backgroundColor: "#000", // ensures any bounce shows dark instead of blue/white
+        WebkitOverflowScrolling: "touch",
+        overscrollBehavior: "none",
+      }}
+    >
+      {/* Background Image - constrain to avoid any overflow */}
+      <img
+        src="/assets/banner9.png"
+        alt="Banner background"
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{
+          display: "block",
+          maxWidth: "100%",
+          maxHeight: "100%",
+          pointerEvents: "none",
+          userSelect: "none",
+        }}
+      />
 
       {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/50 to-black/75 pointer-events-none" />
@@ -311,16 +367,31 @@ export default function Banner3() {
               onFocus={onLogoFocus}
               onBlur={onLogoBlur}
             >
-              <div className={`flex items-center justify-center flex-shrink-0 transition-all overflow-hidden ${isScrolled ? "w-9 h-9" : "w-16 h-16"}`}>
+              <div
+                className={`flex items-center justify-center flex-shrink-0 transition-all overflow-hidden ${
+                  isScrolled ? "w-9 h-9" : "w-16 h-16"
+                }`}
+              >
                 <img src="/assets/Logo1.png" alt="Quantum HR logo" className="w-full h-full object-contain" />
               </div>
 
-              <div className="relative overflow-hidden flex items-center justify-center" style={{ minWidth: 120, height: isScrolled ? 28 : 48, whiteSpace: "nowrap" }}>
-                <div className={`absolute inset-0 flex items-center justify-center transition-all duration-200 transform ${showFullLabel ? "opacity-0 -translate-y-1 scale-95" : "opacity-100 translate-y-0 scale-100"}`}>
+              <div
+                className="relative overflow-hidden flex items-center justify-center"
+                style={{ minWidth: 120, height: isScrolled ? 28 : 48, whiteSpace: "nowrap" }}
+              >
+                <div
+                  className={`absolute inset-0 flex items-center justify-center transition-all duration-200 transform ${
+                    showFullLabel ? "opacity-0 -translate-y-1 scale-95" : "opacity-100 translate-y-0 scale-100"
+                  }`}
+                >
                   <span className="text-white font-extrabold text-xl md:text-2xl uppercase">Q-HR</span>
                 </div>
 
-                <div className={`absolute inset-0 flex flex-col items-center justify-center transition-all duration-200 transform ${showFullLabel ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-1 scale-95"}`}>
+                <div
+                  className={`absolute inset-0 flex flex-col items-center justify-center transition-all duration-200 transform ${
+                    showFullLabel ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-1 scale-95"
+                  }`}
+                >
                   <span className="text-white font-extrabold text-xl uppercase">Quantum</span>
                   <span className="text-white font-semibold text-xs uppercase mt-0.5">HR</span>
                 </div>
@@ -348,8 +419,10 @@ export default function Banner3() {
             >
               <span className="uppercase font-semibold tracking-wide text-sm">GET STARTED</span>
 
-              {/* Arrow inside a rounded rectangle box */}
-              <span className="flex items-center justify-center rounded-md" style={{ width: 34, height: 34, background: "#2D9CFE", color: "#00243a" }}>
+              <span
+                className="flex items-center justify-center rounded-md"
+                style={{ width: 34, height: 34, background: "#2D9CFE", color: "#00243a" }}
+              >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.2" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M7 7h10v10" />
                 </svg>
